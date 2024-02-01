@@ -2,6 +2,8 @@ import { Component, OnInit  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ModalService } from 'src/app/services/modal.service';
+import { ToastsComponent } from '../toasts/toasts.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-board',
@@ -17,6 +19,7 @@ export class EditBoardComponent implements OnInit {
     private router: Router, 
     private route: ActivatedRoute,
     private service: ModalService,
+    private snackbar: MatSnackBar
     ){}
 
     taskFormControl(){
@@ -37,6 +40,10 @@ export class EditBoardComponent implements OnInit {
 
   editTask(){
     // console.log("payload>>>", this.taskForm.value);
+    this.service.setSuccessMessage("Task has been updated succesfully!")
+    this.snackbar.openFromComponent(ToastsComponent,{
+      duration: 4000,
+    })
     this.router.navigate(['/KanbanBoard/dashboard'],{relativeTo: this.route});
   }
 

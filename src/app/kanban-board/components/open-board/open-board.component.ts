@@ -3,17 +3,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TaskProfile, Tasks } from 'src/app/models/tasks';
 import { ModalService } from 'src/app/services/modal.service';
 import { Subscription } from 'rxjs';
+import { ToastsComponent } from '../toasts/toasts.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-open-board',
   templateUrl: './open-board.component.html',
   styleUrls: ['./open-board.component.scss']
 })
-export class OpenBoardComponent implements OnInit{
+export class OpenBoardComponent implements OnInit {
 
   @Input() filterTasks: string = '';
   taskSubscription$!: Subscription;
-  openedTasks:Tasks[] = [
+  openedTasks: Tasks[] = [
     // {
     //   columnType: 'open',
     //   title: 'Breakfast',
@@ -40,45 +42,57 @@ export class OpenBoardComponent implements OnInit{
     // },
   ]
 
-   totalLength:number = 0
-  constructor(private router: Router, private route: ActivatedRoute, private service: ModalService){
-      this.totalLength = this.openedTasks.length;
+  totalLength: number = 0
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: ModalService,
+    private snackbar: MatSnackBar
+  ) {
+    this.totalLength = this.openedTasks.length;
   }
 
   ngOnInit(): void {
     this.taskSubscription$ = this.service.getCreatedTask().subscribe({
       next: (res: any) => {
-       // console.log('res>>>', res);
         this.openedTasks = res;
         this.totalLength = this.openedTasks.length;
       },
       error: (err: any) => {
         console.error('errr>>', err);
+        this.service.setErrorMessage(err)
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+        })
       }
     })
   }
 
-  addTask(){
-    this.router.navigate(['/KanbanBoard/add-task'], {relativeTo: this.route});
+  addTask() {
+    this.router.navigate(['/KanbanBoard/add-task'], { relativeTo: this.route });
   }
 
-  editTask(item:TaskProfile){
+  editTask(item: TaskProfile) {
     this.service.setTask(item);
-    this.router.navigate(['/KanbanBoard/edit-task'], 
-    {
-      relativeTo: this.route,
-      queryParams: {
-        columnType: 'open-tasks'
+    this.router.navigate(['/KanbanBoard/edit-task'],
+      {
+        relativeTo: this.route,
+        queryParams: {
+          columnType: 'open-tasks'
+        }
       }
-    }
     );
   }
 
-  deleteItem(item: TaskProfile, index: number){
-    this.openedTasks.forEach((row:any, id: number) => {
-      if(row === item && id+1 === index){
-         this.openedTasks.splice(index-1, 1);
-         this.totalLength = this.openedTasks.length;
+  deleteItem(item: TaskProfile, index: number) {
+    this.openedTasks.forEach((row: any, id: number) => {
+      if (row === item && id + 1 === index) {
+        this.openedTasks.splice(index - 1, 1);
+        this.totalLength = this.openedTasks.length;
+        this.service.setSuccessMessage("Task has been deleted successfully!")
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+        })
       }
     })
   }

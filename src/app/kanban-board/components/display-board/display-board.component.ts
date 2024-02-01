@@ -2,6 +2,8 @@ import { Component,OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ModalService } from 'src/app/services/modal.service';
+import { ToastsComponent } from '../toasts/toasts.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-display-board',
@@ -15,7 +17,8 @@ export class DisplayBoardComponent implements OnInit {
   constructor(
     private router: Router, 
     private route: ActivatedRoute,
-    private service: ModalService
+    private service: ModalService,
+    private snackbar: MatSnackBar
     ){}
 
     taskFormControl(){
@@ -35,6 +38,10 @@ export class DisplayBoardComponent implements OnInit {
 
   createTask(){
     this.service.setCreatedTask( this.taskForm.value);
+    this.service.setSuccessMessage("Task has been created successfully!")
+    this.snackbar.openFromComponent(ToastsComponent,{
+      duration: 4000,
+    })
     this.router.navigate(['/KanbanBoard/dashboard'],{relativeTo: this.route});
   }
 }

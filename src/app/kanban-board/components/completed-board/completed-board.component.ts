@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalService } from 'src/app/services/modal.service';
 import { TaskProfile, Tasks } from 'src/app/models/tasks';
+import { ToastsComponent } from '../toasts/toasts.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-completed-board',
@@ -37,8 +39,13 @@ export class CompletedBoardComponent {
       dueDate: '2024-01-01'
     },
   ]
-  totalLength:number = 0
-  constructor(private router: Router, private route: ActivatedRoute, private service: ModalService){
+  totalLength:number = 0;
+  constructor(
+    private router: Router,
+     private route: ActivatedRoute,
+      private service: ModalService,
+      private snackbar: MatSnackBar
+      ){
     this.totalLength = this.completedTasks.length;
   }
 
@@ -59,6 +66,10 @@ export class CompletedBoardComponent {
       if(row === item && id+1 === index){
          this.completedTasks.splice(index-1, 1);
          this.totalLength = this.completedTasks.length;
+         this.service.setSuccessMessage("Task has been deleted successfully!")
+         this.snackbar.openFromComponent(ToastsComponent,{
+           duration: 4000,
+         })
       }
     })
   }

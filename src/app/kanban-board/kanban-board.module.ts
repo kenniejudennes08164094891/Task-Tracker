@@ -16,10 +16,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { LoginComponent } from './components/login/login.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { SecurityGuard } from '../guards/security.guard';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ToastsComponent } from './components/toasts/toasts.component';
 
 
 const materialModules = [
-  MatIconModule,MatButtonModule,MatDialogModule, MatSelectModule
+  MatIconModule,MatButtonModule,MatDialogModule, MatSelectModule, MatSnackBarModule
 ]
 
 @NgModule({
@@ -32,7 +35,8 @@ const materialModules = [
     InProgressBoardComponent,
     CompletedBoardComponent,
     LoginComponent,
-    FilterPipe
+    FilterPipe,
+    ToastsComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +44,7 @@ const materialModules = [
     materialModules,
     ReactiveFormsModule,
     FormsModule
-  ]
+  ],
+  providers:[SecurityGuard]
 })
 export class KanbanBoardModule { }
