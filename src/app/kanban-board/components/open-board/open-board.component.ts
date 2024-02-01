@@ -14,12 +14,12 @@ export class OpenBoardComponent implements OnInit{
   @Input() filterTasks: string = '';
   taskSubscription$!: Subscription;
   openedTasks:Tasks[] = [
-    {
-      columnType: 'open',
-      title: 'Breakfast',
-      description: 'Lorem Ipsum...',
-      dueDate: '2024-01-01'
-    },
+    // {
+    //   columnType: 'open',
+    //   title: 'Breakfast',
+    //   description: 'Lorem Ipsum...',
+    //   dueDate: '2024-01-01'
+    // },
     // {
     //   columnType: 'open',
     //   title: 'Lauch',
