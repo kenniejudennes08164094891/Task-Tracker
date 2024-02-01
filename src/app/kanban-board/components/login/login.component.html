@@ -1,0 +1,55 @@
+<body class="bg-cover bg-center h-screen flex items-center" id="bg-image">
+    <div class="bg-white p-8 rounded shadow-md w-96 mx-auto">
+        <!-- Your login form goes here -->
+        <form [formGroup]="loginForm">
+            <div class="mb-4 text-2xl font-bold">
+                Task Tracker Login
+            </div>
+            <div class="mb-4">
+                <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input placeholder="input email" formControlName="email" type="email" id="email" name="email"
+                    class="w-full px-3 py-2 border rounded-md">
+                <small class="text-red-500">
+                    <span class="float-left"
+                        *ngIf="loginForm.get('email')?.['invalid'] && (loginForm.get('email')?.['touched'] || loginForm.get('email')?.['dirty'])">
+                        <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['required']">
+                            *email is a required field
+                        </small>
+                        <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['email']">
+                            *Please enter a valid email address
+                        </small>
+                    </span>
+                </small>
+            </div>
+
+            <br>
+
+            <!-- <div class="relative">
+                <input type="password"
+                    class="w-full py-2 px-3 border rounded-md focus:outline-none focus:shadow-outline"
+                    [(ngModel)]="password" placeholder="Password" formControlName="password" />
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
+                    <i class="bi bi-eye text-gray-500 hover:text-blue-500" [ngClass]="{ 'bi-eye-slash': showPassword }"
+                        (click)="togglePasswordVisibility()"></i>
+                </div>
+            </div> -->
+
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                <input placeholder="input password" formControlName="password" [type]="showPassword === false ? 'password': 'text'" id="password"
+                    name="password" class="w-full px-3 py-2 border rounded-md">
+                   <div id="eye-controls">
+                    <mat-icon (click)="togglePasswordVisibility()">{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                   </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Token:</label>
+                <input placeholder="Input token digits" formControlName="token" type="password" id="password"
+                    name="password" class="w-full px-3 py-2 border rounded-md">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 w-full rounded-md"
+                [disabled]="!loginForm.valid" (click)="loginUser()">Login</button>
+        </form>
+    </div>
+</body>
