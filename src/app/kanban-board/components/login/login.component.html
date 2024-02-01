@@ -9,7 +9,7 @@
                 <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
                 <input placeholder="input email" formControlName="email" type="email" id="email" name="email"
                     class="w-full px-3 py-2 border rounded-md">
-                <small class="text-red-500">
+                <small class="text-red-500 font-bold">
                     <span class="float-left"
                         *ngIf="loginForm.get('email')?.['invalid'] && (loginForm.get('email')?.['touched'] || loginForm.get('email')?.['dirty'])">
                         <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['required']">
@@ -30,7 +30,7 @@
                     [type]="showPassword === false ? 'password': 'text'" id="password" name="password"
                     class="w-full px-3 py-2 border rounded-md">
 
-                <small class="text-red-500">
+                <small class="text-red-500 font-bold">
                     <span class="float-left"
                         *ngIf="loginForm.get('password')?.['invalid'] && (loginForm.get('password')?.['touched'] || loginForm.get('password')?.['dirty'])">
                         <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.['required']">
@@ -54,7 +54,7 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2">Token:</label>
                 <input placeholder="Input token digits" formControlName="token" type="text" id="token"
                     name="token" class="w-full px-3 py-2 border rounded-md">
-                <small class="text-red-500">
+                <small class="text-red-500 font-bold">
                     <span class="float-left"
                         *ngIf="loginForm.get('token')?.['invalid'] && (loginForm.get('token')?.['touched'] || loginForm.get('token')?.['dirty'])">
                         <small class="text-danger" *ngIf="loginForm.get('token')?.errors?.['required']">
